@@ -7,15 +7,15 @@ const notes = ["C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"];
 const scales = [
   {
     name: "Accord Major",
-    scale: [4, 3]
+    scale: [4, 3, 3]
   },
   {
     name: "Accord Minor",
-    scale: [3, 4]
+    scale: [3, 4, 3]
   },
   {
     name: "Accord Dim",
-    scale: [3, 3]
+    scale: [3, 3, 3]
   },
   {
     name: "Scale Major",
@@ -83,49 +83,66 @@ export default function App() {
   const [curScale2, setCurScale2] = useState(0);
   return (
       <div className="App">
-        <select value={curNote1} onChange={(e) => setCurNote1(e.target.value)}>
-          {notes.map((n) => (
-              <option value={n} key={n}>
-                {n}
-              </option>
-          ))}
-        </select>
-        {scales.map((sc) => (
-            <div key={sc.name}>
-              {sc.name}: {findScale(curNote1, sc.scale).join(", ")}
-            </div>
-        ))}
-        <div style={{ marginTop: 50 }} />
-        <select value={curScale1} onChange={(e) => setCurScale1(+e.target.value)}>
-          {scales.map((s, index) => (
-              <option value={index} key={index}>
-                {s.name}
-              </option>
-          ))}
-        </select>
-        <select value={curNote2} onChange={(e) => setCurNote2(e.target.value)}>
-          <option value="">Skip</option>
-          {notes.map((n) => (
-              <option value={n} key={n}>
-                {n}
-              </option>
-          ))}
-        </select>
-        {curNote2 && (
-            <select
-                value={curScale2}
-                onChange={(e) => setCurScale2(+e.target.value)}
-            >
-              {scales.map((s, index) => (
-                  <option value={index} key={index}>
-                    {s.name}
-                  </option>
+        <div style={{ display: 'flex', marginBottom: '24px' }}>
+          <div style={{marginRight: '30px'}}>
+            <select value={curNote1} onChange={(e) => setCurNote1(e.target.value)}>
+              {notes.map((n) => (
+                <option value={n} key={n}>
+                  {n}
+                </option>
               ))}
             </select>
-        )}
+            {scales.map((sc) => (
+              <div key={sc.name}>
+                {sc.name}: {findScale(curNote1, sc.scale).join(", ")}
+              </div>
+            ))}
+            <select
+              value={curScale1}
+              onChange={(e) => setCurScale1(+e.target.value)}
+              style={{ marginTop: '12px' }}
+            >
+              {scales.map((s, index) => (
+                <option value={index} key={index}>
+                  {s.name}
+                </option>
+              ))}
+            </select>
+          </div>
+          <div>
+            <select value={curNote2} onChange={(e) => setCurNote2(e.target.value)}>
+              <option value="">Skip</option>
+              {notes.map((n) => (
+                <option value={n} key={n}>
+                  {n}
+                </option>
+              ))}
+            </select>
+            {curNote2 && (
+                <>
+                  {scales.map((sc) => (
+                    <div key={sc.name}>
+                      {sc.name}: {findScale(curNote2, sc.scale).join(", ")}
+                    </div>
+                  ))}
+                  <select
+                    value={curScale2}
+                    onChange={(e) => setCurScale2(+e.target.value)}
+                    style={{ marginTop: '12px' }}
+                  >
+                    {scales.map((s, index) => (
+                      <option value={index} key={index}>
+                        {s.name}
+                      </option>
+                    ))}
+                  </select>
+                </>
+            )}
+          </div>
+        </div>
 
         <Cont2.Provider
-            value={curNote2 ? findScale(curNote2, scales[curScale2].scale) : []}
+          value={curNote2 ? findScale(curNote2, scales[curScale2].scale) : []}
         >
           <Cont1.Provider value={findScale(curNote1, scales[curScale1].scale)}>
             <StringRow note="G" />

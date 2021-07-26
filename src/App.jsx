@@ -7,11 +7,11 @@ const notes = ["C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"];
 const scales = [
   {
     name: "Accord Major",
-    scale: [4, 3, 3]
+    scale: [4, 3]
   },
   {
     name: "Accord Minor",
-    scale: [3, 4, 3]
+    scale: [3, 4]
   },
   {
     name: "Accord Dim",
@@ -65,7 +65,8 @@ function Square({ note }) {
 function StringRow({ note }) {
   const [rowNotes] = useState(() => {
     const index = notes.findIndex((n) => n === note);
-    return [...notes.slice(index), ...notes.slice(0, index)];
+    const rowNotes = [...notes.slice(index), ...notes.slice(0, index)]
+    return [...rowNotes, ...rowNotes.slice(6)];
   });
   return (
       <div className="row">

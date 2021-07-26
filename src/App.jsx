@@ -66,7 +66,7 @@ function StringRow({ note }) {
   const [rowNotes] = useState(() => {
     const index = notes.findIndex((n) => n === note);
     const rowNotes = [...notes.slice(index), ...notes.slice(0, index)]
-    return [...rowNotes, ...rowNotes.slice(6)];
+    return rowNotes;
   });
   return (
       <div className="row">

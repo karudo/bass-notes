@@ -4,6 +4,21 @@ import { useState, useContext, createContext } from "react";
 
 const notes = ["C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"];
 
+const notesOtherNames = {
+  "C": "До",
+  "C#": "До#",
+  "D": "Ре",
+  "D#": "Ре#",
+  "E": "Ми",
+  "F": "Фа",
+  "F#": "Фа#",
+  "G": "Соль",
+  "G#": "Соль#",
+  "A": "Ля",
+  "A#": "Ля#",
+  "B": "Си"
+}
+
 const scales = [
   {
     name: "Accord Major",
@@ -48,21 +63,19 @@ function findScale(note, scale) {
   return indexes.map((i) => notes[i]);
 }
 
-function Square({ note }) {
-  const thisScale1 = useContext(Cont1);
-  const position1 = thisScale1.findIndex((n) => n === note);
-  const thisScale2 = useContext(Cont2);
-  const position2 = thisScale2.findIndex((n) => n === note);
+function Square({ note, children }) {
   return (
       <div className="square">
         <div className="note">{note}</div>
-        {position1 >= 0 && <div className="position1">{position1 + 1}</div>}
-        {position2 >= 0 && <div className="position2">{position2 + 1}</div>}
+        {children}
       </div>
   );
 }
 
 function StringRow({ note }) {
+  const thisScale1 = useContext(Cont1);
+  const thisScale2 = useContext(Cont2);
+
   const [rowNotes] = useState(() => {
     const index = notes.findIndex((n) => n === note);
     const rowNotes = [...notes.slice(index), ...notes.slice(0, index)]
@@ -70,9 +83,16 @@ function StringRow({ note }) {
   });
   return (
       <div className="row">
-        {rowNotes.map((n, index) => (
-            <Square note={n} key={index} />
-        ))}
+        {rowNotes.map((curNote) => {
+          const position1 = thisScale1.findIndex((n) => n === curNote);
+          const position2 = thisScale2.findIndex((n) => n === curNote);
+          return (
+            <Square note={curNote} key={curNote}>
+              {position1 >= 0 && <div className="position1">{position1 + 1}</div>}
+              {position2 >= 0 && <div className="position2">{position2 + 1}</div>}
+            </Square>
+          );
+        })}
       </div>
   );
 }

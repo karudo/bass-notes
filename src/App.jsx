@@ -78,6 +78,7 @@ function StringRow({ note }) {
 }
 
 export default function App() {
+  const [strings, setStrings] = useState(4);
   const [curNote1, setCurNote1] = useState("C");
   const [curNote2, setCurNote2] = useState("");
   const [curScale1, setCurScale1] = useState(0);
@@ -150,9 +151,31 @@ export default function App() {
             <StringRow note="D" />
             <StringRow note="A" />
             <StringRow note="E" />
-            <StringRow note="B" />
+            {strings === 5 && <StringRow note="B" />}
           </Cont1.Provider>
         </Cont2.Provider>
+        <div>
+          <label>
+            <input
+              type="radio"
+              name="strings"
+              value="4"
+              checked={strings === 4}
+              onChange={() => setStrings(4)}
+            />
+            4 strings
+          </label>
+          <label>
+            <input
+              type="radio"
+              name="strings"
+              value="5"
+              checked={strings === 5}
+              onChange={() => setStrings(5)}
+            />
+            5 strings
+          </label>
+        </div>
       </div>
   );
 }

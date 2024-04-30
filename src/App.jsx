@@ -67,6 +67,13 @@ export function TrainNotesApp() {
       <div>
         { show === 'fretboard' && (
           <div>
+            <div className="row">
+              {Array(15).fill(0).map((_, i) => (
+                <div key={i} className="headSquare">
+                  {i}
+                </div>
+              ))}
+            </div>
             <StringRow note="G" scale1={ [note] } scale2={ [] }/>
             <StringRow note="D" scale1={ [note] } scale2={ [] }/>
             <StringRow note="A" scale1={ [note] } scale2={ [] }/>

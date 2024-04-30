@@ -73,10 +73,10 @@ export function StringRow({ note, scale1, scale2 }) {
   const [rowNotes] = useState(() => {
     const index = notes.findIndex((n) => n === note);
     const rowNotes = [...notes.slice(index), ...notes.slice(0, index)]
-    return rowNotes;
+    return [...rowNotes, ...rowNotes].slice(0, 15)
   });
   return (
-    <div className="row">
+    <div className="row string">
       {rowNotes.map((curNote) => {
         const position1 = scale1.findIndex((n) => n === curNote);
         const position2 = scale2.findIndex((n) => n === curNote);

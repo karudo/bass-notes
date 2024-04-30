@@ -157,7 +157,7 @@ export function FindScaleApp() {
         <StringRow note="D" scale1={scale1} scale2={scale2} />
         <StringRow note="A" scale1={scale1} scale2={scale2} />
         <StringRow note="E" scale1={scale1} scale2={scale2} />
-        {strings === 5 && <StringRow note="B" />}
+        {strings === 5 && <StringRow note="B" scale1={scale1} scale2={scale2} />}
       </div>
       <div>
         <label>

@@ -1,11 +1,15 @@
 import React from 'react';
+import shuffle from 'lodash/shuffle';
 import { FindScaleApp } from './FindScale';
 import './TrainNotes.css';
 import { StringRow } from './FindScale';
 
-export const notes = ["C", "D", "E", "F", "G", "A", "B"];
+export const notes = ["A", "B", "C", "D", "E", "F", "G"];
 
 export const notesOtherNames = {
+  "A": "Ля",
+  "A#": "Ля#",
+  "B": "Си",
   "C": "До",
   "C#": "До#",
   "D": "Ре",
@@ -15,13 +19,11 @@ export const notesOtherNames = {
   "F#": "Фа#",
   "G": "Соль",
   "G#": "Соль#",
-  "A": "Ля",
-  "A#": "Ля#",
-  "B": "Си"
 }
 
 function randomNote() {
-  return notes[Math.floor(Math.random() * notes.length)];
+  const n = Math.floor(Math.random() * notes.length);
+  return notes[n];
 }
 
 function wait(s) {
@@ -36,13 +38,21 @@ export function TrainNotesApp() {
     let isRunning = true;
     (async () => {
       while (isRunning) {
-        const note = randomNote();
-        setNote(note);
-        setAltName(Math.random() < 0.1);
-        setShow('note');
-        await wait(5);
-        setShow('fretboard');
-        await wait(5);
+        const shuffleNotes = shuffle(notes);
+        for (const note of shuffleNotes) {
+          if (!isRunning) {
+            break;
+          }
+          setNote(note);
+          setAltName(Math.random() < 0.1);
+          setShow('note');
+          await wait(5);
+          if (!isRunning) {
+            break;
+          }
+          setShow('fretboard');
+          await wait(5);
+        }
       }
     })();
     return () => {

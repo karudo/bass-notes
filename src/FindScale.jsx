@@ -77,11 +77,11 @@ export function StringRow({ note, scale1, scale2 }) {
   });
   return (
     <div className="row string">
-      {rowNotes.map((curNote) => {
+      {rowNotes.map((curNote, i) => {
         const position1 = scale1.findIndex((n) => n === curNote);
         const position2 = scale2.findIndex((n) => n === curNote);
         return (
-          <Square note={curNote} key={curNote}>
+          <Square note={curNote} key={`${curNote}-${i}`}>
             {position1 >= 0 && <div className="position1">{position1 + 1}</div>}
             {position2 >= 0 && <div className="position2">{position2 + 1}</div>}
           </Square>

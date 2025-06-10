@@ -8,22 +8,25 @@
     "test": "jest"
   },
   "dependencies": {
+    "@emotion/react": "^11.14.0",
+    "@emotion/styled": "^11.14.0",
+    "@mui/material": "^7.1.1",
     "es-toolkit": "^1.39.3",
     "react": "^19.1.0",
     "react-dom": "^19.1.0"
   },
   "devDependencies": {
-    "@vitejs/plugin-react": "^4.5.2",
-    "vite": "^6.3.5",
-    "jest": "^30.0.0",
-    "babel-jest": "^30.0.0",
     "@babel/preset-env": "^7.27.2",
     "@babel/preset-react": "^7.27.1",
     "@babel/preset-typescript": "^7.27.1",
-    "typescript": "^5.3.3",
-    "identity-obj-proxy": "^3.0.0",
+    "@types/jest": "^29.5.14",
     "@types/react": "^19.1.7",
     "@types/react-dom": "^19.1.6",
-    "@types/jest": "^29.5.14"
+    "@vitejs/plugin-react": "^4.5.2",
+    "babel-jest": "^30.0.0",
+    "identity-obj-proxy": "^3.0.0",
+    "jest": "^30.0.0",
+    "typescript": "^5.3.3",
+    "vite": "^6.3.5"
   }
 }

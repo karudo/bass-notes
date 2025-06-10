@@ -1,4 +1,4 @@
-import { findScale } from '../FindScale';
+import { findScale } from '../music';
 
 describe('findScale', () => {
   test('C major scale', () => {

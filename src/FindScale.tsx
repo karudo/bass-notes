@@ -1,36 +1,8 @@
 import './FindScale.css';
 import React, { useState } from 'react';
 import type { JSX } from 'react';
-
-export const notes: string[] = [
-  'C',
-  'C#',
-  'D',
-  'D#',
-  'E',
-  'F',
-  'F#',
-  'G',
-  'G#',
-  'A',
-  'A#',
-  'B',
-];
-
-export const notesOtherNames: Record<string, string> = {
-  "C": "До",
-  "C#": "До#",
-  "D": "Ре",
-  "D#": "Ре#",
-  "E": "Ми",
-  "F": "Фа",
-  "F#": "Фа#",
-  "G": "Соль",
-  "G#": "Соль#",
-  "A": "Ля",
-  "A#": "Ля#",
-  "B": "Си",
-};
+import { chromaticNotes, findScale } from './music';
+import { StringRow } from './Fretboard';
 
 const scales: { name: string; scale: number[] }[] = [
   {
@@ -63,57 +35,7 @@ const scales: { name: string; scale: number[] }[] = [
   }
 ];
 
-export function findScale(note: string, scale: number[]): string[] {
-  let lastIdx = notes.findIndex((n) => n === note);
-  const indexes = [lastIdx];
-  for (const s of scale) {
-    lastIdx += s;
-    indexes.push(lastIdx % 12);
-  }
-  return indexes.map((i) => notes[i]);
-}
 
-interface SquareProps {
-  note: string;
-  children?: React.ReactNode;
-}
-
-function Square({ note, children }: SquareProps): JSX.Element {
-  return (
-    <div className="square">
-      <div className="note">{note}</div>
-      {children}
-    </div>
-  );
-}
-
-interface StringRowProps {
-  note: string;
-  scale1: string[];
-  scale2: string[];
-}
-
-export function StringRow({ note, scale1, scale2 }: StringRowProps): JSX.Element {
-  const [rowNotes] = useState(() => {
-    const index = notes.findIndex((n) => n === note);
-    const rowNotes = [...notes.slice(index), ...notes.slice(0, index)]
-    return [...rowNotes, ...rowNotes].slice(0, 15)
-  });
-  return (
-    <div className="row string">
-      {rowNotes.map((curNote, i) => {
-        const position1 = scale1.findIndex((n) => n === curNote);
-        const position2 = scale2.findIndex((n) => n === curNote);
-        return (
-          <Square note={curNote} key={`${curNote}-${i}`}>
-            {position1 >= 0 && <div className="position1">{position1 + 1}</div>}
-            {position2 >= 0 && <div className="position2">{position2 + 1}</div>}
-          </Square>
-        );
-      })}
-    </div>
-  );
-}
 
 interface SelectScaleProps {
   note: string;
@@ -128,7 +50,7 @@ function SelectScale({ note, onChangeNote, scale, onChangeScale }: SelectScalePr
       <div>
         <select value={ note } onChange={ (e) => onChangeNote(e.target.value) }>
           <option value="">Skip</option>
-          { notes.map((n) => (
+          { chromaticNotes.map((n) => (
             <option value={ n } key={ n }>
               { n }
             </option>

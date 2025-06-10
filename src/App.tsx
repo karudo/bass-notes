@@ -2,35 +2,33 @@ import React from 'react';
 import type { JSX } from 'react';
 import { FindScaleApp } from './FindScale';
 import { TrainNotesApp } from './TrainNotes';
+import { CssBaseline, RadioGroup, FormControlLabel, Radio, Stack } from '@mui/material';
 
 export default function App(): JSX.Element {
   const [app, setApp] = React.useState("TrainNotesApp");
   return (
-    <div>
-      <div style={ { padding: '12px 0', fontSize: 20 }}>
-        <label>
-          <input
-            type="radio"
-            name="app"
+    <React.Fragment>
+      <CssBaseline />
+      <Stack sx={{ p: 2 }}>
+        <RadioGroup
+          row
+          value={app}
+          onChange={(e) => setApp((e.target as HTMLInputElement).value)}
+        >
+          <FormControlLabel
             value="TrainNotesApp"
-            checked={app === 'TrainNotesApp'}
-            onChange={() => setApp('TrainNotesApp')}
+            control={<Radio />}
+            label="TrainNotesApp"
           />
-          TrainNotesApp
-        </label>
-        <label>
-          <input
-            type="radio"
-            name="app"
+          <FormControlLabel
             value="FindScaleApp"
-            checked={app === 'FindScaleApp'}
-            onChange={() => setApp('FindScaleApp')}
+            control={<Radio />}
+            label="FindScaleApp"
           />
-          FindScaleApp
-        </label>
-      </div>
+        </RadioGroup>
+      </Stack>
       {app === 'TrainNotesApp' && <TrainNotesApp/>}
       {app === 'FindScaleApp' && <FindScaleApp/>}
-    </div>
+    </React.Fragment>
   );
 }

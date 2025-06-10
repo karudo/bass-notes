@@ -3,6 +3,17 @@ import React, { useState } from 'react';
 import type { JSX } from 'react';
 import { chromaticNotes, findScale } from './music';
 import { StringRow } from './Fretboard';
+import {
+  FormControl,
+  InputLabel,
+  MenuItem,
+  Select,
+  RadioGroup,
+  Radio,
+  FormControlLabel,
+  Stack,
+  Typography,
+} from '@mui/material';
 
 const scales: { name: string; scale: number[] }[] = [
   {
@@ -46,38 +57,47 @@ interface SelectScaleProps {
 
 function SelectScale({ note, onChangeNote, scale, onChangeScale }: SelectScaleProps): JSX.Element {
   return (
-    <div className="selectScale">
+    <Stack className="selectScale">
+      <FormControl size="small">
+        <InputLabel id="note-label">Note</InputLabel>
+        <Select
+          labelId="note-label"
+          label="Note"
+          value={note}
+          onChange={(e) => onChangeNote(e.target.value)}
+        >
+          <MenuItem value="">Skip</MenuItem>
+          {chromaticNotes.map((n) => (
+            <MenuItem value={n} key={n}>
+              {n}
+            </MenuItem>
+          ))}
+        </Select>
+      </FormControl>
       <div>
-        <select value={ note } onChange={ (e) => onChangeNote(e.target.value) }>
-          <option value="">Skip</option>
-          { chromaticNotes.map((n) => (
-            <option value={ n } key={ n }>
-              { n }
-            </option>
-          )) }
-        </select>
-      </div>
-      <div>
-      {scales.map((sc) => (
-          <div key={ sc.name }>
-            {sc.name}: {note && findScale(note, sc.scale).join(", ")}
-          </div>
+        {scales.map((sc) => (
+          <Typography key={sc.name} variant="body2">
+            {sc.name}: {note && findScale(note, sc.scale).join(', ')}
+          </Typography>
         ))}
       </div>
-      <div>
-        <select
+      <FormControl size="small">
+        <InputLabel id="scale-label">Scale</InputLabel>
+        <Select
+          labelId="scale-label"
+          label="Scale"
           value={scale}
-          onChange={(e) => onChangeScale(+e.target.value)}
+          onChange={(e) => onChangeScale(Number(e.target.value))}
         >
           {scales.map((s, index) => (
-            <option value={index} key={index}>
+            <MenuItem value={index} key={index}>
               {s.name}
-            </option>
+            </MenuItem>
           ))}
-        </select>
-      </div>
-    </div>
-  )
+        </Select>
+      </FormControl>
+    </Stack>
+  );
 }
 
 export function FindScaleApp(): JSX.Element {
@@ -90,7 +110,7 @@ export function FindScaleApp(): JSX.Element {
   const scale2 = curNote2 ? findScale(curNote2, scales[curScale2].scale) : [];
   return (
     <div className="App">
-      <div style={{ display: 'grid', gridAutoFlow: 'column', justifyContent: 'start', gap: 32, marginBottom: '24px' }}>
+      <Stack direction="row" spacing={4} sx={{ mb: 3 }}>
         <SelectScale
           note={curNote1}
           onChangeNote={setCurNote1}
@@ -103,7 +123,7 @@ export function FindScaleApp(): JSX.Element {
           scale={curScale2}
           onChangeScale={setCurScale2}
         />
-      </div>
+      </Stack>
 
       <div>
         <StringRow note="G" scale1={scale1} scale2={scale2} />
@@ -112,28 +132,14 @@ export function FindScaleApp(): JSX.Element {
         <StringRow note="E" scale1={scale1} scale2={scale2} />
         {strings === 5 && <StringRow note="B" scale1={scale1} scale2={scale2} />}
       </div>
-      <div>
-        <label>
-          <input
-            type="radio"
-            name="strings"
-            value="4"
-            checked={strings === 4}
-            onChange={() => setStrings(4)}
-          />
-          4 strings
-        </label>
-        <label>
-          <input
-            type="radio"
-            name="strings"
-            value="5"
-            checked={strings === 5}
-            onChange={() => setStrings(5)}
-          />
-          5 strings
-        </label>
-      </div>
+      <RadioGroup
+        row
+        value={strings.toString()}
+        onChange={(e) => setStrings(Number((e.target as HTMLInputElement).value))}
+      >
+        <FormControlLabel value="4" control={<Radio />} label="4 strings" />
+        <FormControlLabel value="5" control={<Radio />} label="5 strings" />
+      </RadioGroup>
     </div>
   );
 }

@@ -4,6 +4,7 @@ import shuffle from 'es-toolkit/compat/shuffle';
 import { StringRow } from './Fretboard';
 import { notesOtherNames } from './music';
 import './TrainNotes.css';
+import { TextField, Typography, Stack } from '@mui/material';
 
 export const notes: string[] = ["A", "B", "C", "D", "E", "F", "G"];
 function randomNote(): string {
@@ -47,21 +48,23 @@ export function TrainNotesApp(): JSX.Element {
   }, [waitSeconds]);
   return (
     <div>
-      <div style={{ fontSize: 108, display: 'flex', justifyContent: 'center' }}>
-        { altName ? notesOtherNames[note] : note }
-      </div>
-      <div style={{ padding: '12px 0' }}>
-        <label>
-          Wait period (s):
-          <input
-            type="number"
-            min="1"
-            value={waitSeconds}
-            onChange={(e) => setWaitSeconds(Number(e.target.value))}
-            style={{ width: 60, marginLeft: 8 }}
-          />
-        </label>
-      </div>
+      <Typography
+        align="center"
+        sx={{ fontSize: 108, display: 'flex', justifyContent: 'center' }}
+      >
+        {altName ? notesOtherNames[note] : note}
+      </Typography>
+      <Stack direction="row" alignItems="center" sx={{ p: 1 }}>
+        <Typography sx={{ mr: 1 }}>Wait period (s):</Typography>
+        <TextField
+          type="number"
+          size="small"
+          inputProps={{ min: 1 }}
+          value={waitSeconds}
+          onChange={(e) => setWaitSeconds(Number(e.target.value))}
+          sx={{ width: 80 }}
+        />
+      </Stack>
       <div>
         { show === 'fretboard' && (
           <div>

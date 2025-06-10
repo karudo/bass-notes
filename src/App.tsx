@@ -4,47 +4,30 @@ import { FindScaleApp } from './FindScale';
 import { TrainNotesApp } from './TrainNotes';
 import {
   CssBaseline,
-  RadioGroup,
-  FormControlLabel,
-  Radio,
+  Tabs,
+  Tab,
   Stack
 } from '@mui/material';
 import {
   Routes,
   Route,
   Navigate,
-  useNavigate,
-  useLocation
+  useLocation,
+  Link as RouterLink
 } from 'react-router-dom';
 
 export default function App(): JSX.Element {
-  const navigate = useNavigate();
   const location = useLocation();
-  const current = location.pathname.includes('find-scale') ? 'FindScaleApp' : 'TrainNotesApp';
+  const current = location.pathname.includes('find-scale') ? '/find-scale' : '/train-notes';
 
   return (
     <React.Fragment>
       <CssBaseline />
       <Stack sx={{ p: 2 }}>
-        <RadioGroup
-          row
-          value={current}
-          onChange={(e) => {
-            const value = (e.target as HTMLInputElement).value;
-            navigate(value === 'TrainNotesApp' ? '/train-notes' : '/find-scale');
-          }}
-        >
-          <FormControlLabel
-            value="TrainNotesApp"
-            control={<Radio />}
-            label="TrainNotesApp"
-          />
-          <FormControlLabel
-            value="FindScaleApp"
-            control={<Radio />}
-            label="FindScaleApp"
-          />
-        </RadioGroup>
+        <Tabs value={current} textColor="primary" indicatorColor="primary">
+          <Tab label="TrainNotesApp" value="/train-notes" component={RouterLink} to="/train-notes" />
+          <Tab label="FindScaleApp" value="/find-scale" component={RouterLink} to="/find-scale" />
+        </Tabs>
       </Stack>
       <Routes>
         <Route path="/train-notes" element={<TrainNotesApp />} />

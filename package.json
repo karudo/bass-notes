@@ -8,7 +8,7 @@
     "test": "jest"
   },
   "dependencies": {
-    "lodash": "^4.17.21",
+    "es-toolkit": "^1.39.3",
     "react": "^19.1.0",
     "react-dom": "^19.1.0"
   },
@@ -21,6 +21,9 @@
     "@babel/preset-react": "^7.27.1",
     "@babel/preset-typescript": "^7.27.1",
     "typescript": "^5.3.3",
-    "identity-obj-proxy": "^3.0.0"
+    "identity-obj-proxy": "^3.0.0",
+    "@types/react": "^19.1.7",
+    "@types/react-dom": "^19.1.6",
+    "@types/jest": "^29.5.14"
   }
 }

@@ -1,26 +1,11 @@
 import React from 'react';
 import type { JSX } from 'react';
 import shuffle from 'es-toolkit/compat/shuffle';
-import { StringRow } from './FindScale';
+import { StringRow } from './Fretboard';
+import { notesOtherNames } from './music';
 import './TrainNotes.css';
 
 export const notes: string[] = ["A", "B", "C", "D", "E", "F", "G"];
-
-export const notesOtherNames: Record<string, string> = {
-  "A": "Ля",
-  "A#": "Ля#",
-  "B": "Си",
-  "C": "До",
-  "C#": "До#",
-  "D": "Ре",
-  "D#": "Ре#",
-  "E": "Ми",
-  "F": "Фа",
-  "F#": "Фа#",
-  "G": "Соль",
-  "G#": "Соль#",
-};
-
 function randomNote(): string {
   const n = Math.floor(Math.random() * notes.length);
   return notes[n];

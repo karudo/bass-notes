@@ -21,15 +21,15 @@ export const notesOtherNames = {
 
 const scales = [
   {
-    name: "Accord Major",
+    name: "Chord Major",
     scale: [4, 3]
   },
   {
-    name: "Accord Minor",
+    name: "Chord Minor",
     scale: [3, 4]
   },
   {
-    name: "Accord Dim",
+    name: "Chord Dim",
     scale: [3, 3, 3]
   },
   {

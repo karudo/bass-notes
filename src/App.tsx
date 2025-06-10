@@ -1,12 +1,11 @@
 import React from 'react';
 import shuffle from 'lodash/shuffle';
-import { FindScaleApp } from './FindScale';
+import { FindScaleApp, StringRow } from './FindScale';
 import './TrainNotes.css';
-import { StringRow } from './FindScale';
 
-export const notes = ["A", "B", "C", "D", "E", "F", "G"];
+export const notes: string[] = ["A", "B", "C", "D", "E", "F", "G"];
 
-export const notesOtherNames = {
+export const notesOtherNames: Record<string, string> = {
   "A": "Ля",
   "A#": "Ля#",
   "B": "Си",
@@ -21,16 +20,16 @@ export const notesOtherNames = {
   "G#": "Соль#",
 }
 
-function randomNote() {
+function randomNote(): string {
   const n = Math.floor(Math.random() * notes.length);
   return notes[n];
 }
 
-function wait(s) {
+function wait(s: number): Promise<void> {
   return new Promise((resolve) => setTimeout(resolve, s * 1000));
 }
 
-export function TrainNotesApp() {
+export function TrainNotesApp(): JSX.Element {
   const [note, setNote] = React.useState(randomNote());
   const [altName, setAltName] = React.useState(false);
   const [show, setShow] = React.useState('note');
@@ -85,7 +84,7 @@ export function TrainNotesApp() {
   );
 }
 
-export default function App() {
+export default function App(): JSX.Element {
   const [app, setApp] = React.useState("TrainNotesApp");
   return (
     <div>

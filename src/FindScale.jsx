@@ -50,7 +50,7 @@ const scales = [
   }
 ];
 
-function findScale(note, scale) {
+export function findScale(note, scale) {
   let lastIdx = notes.findIndex((n) => n === note);
   const indexes = [lastIdx];
   for (const s of scale) {

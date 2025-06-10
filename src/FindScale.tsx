@@ -110,7 +110,7 @@ export function FindScaleApp(): JSX.Element {
   const scale2 = curNote2 ? findScale(curNote2, scales[curScale2].scale) : [];
   return (
     <div className="App">
-      <Stack direction="row" spacing={4} sx={{ mb: 3 }}>
+      <Stack direction="row" spacing={4} sx={{ mb: 3, p: 2 }}>
         <SelectScale
           note={curNote1}
           onChangeNote={setCurNote1}
@@ -125,21 +125,23 @@ export function FindScaleApp(): JSX.Element {
         />
       </Stack>
 
-      <div>
+      <Stack sx={{ p: 2 }}>
         <StringRow note="G" scale1={scale1} scale2={scale2} />
         <StringRow note="D" scale1={scale1} scale2={scale2} />
         <StringRow note="A" scale1={scale1} scale2={scale2} />
         <StringRow note="E" scale1={scale1} scale2={scale2} />
         {strings === 5 && <StringRow note="B" scale1={scale1} scale2={scale2} />}
-      </div>
-      <RadioGroup
-        row
-        value={strings.toString()}
-        onChange={(e) => setStrings(Number((e.target as HTMLInputElement).value))}
-      >
-        <FormControlLabel value="4" control={<Radio />} label="4 strings" />
-        <FormControlLabel value="5" control={<Radio />} label="5 strings" />
-      </RadioGroup>
+      </Stack>
+      <Stack sx={{ p: 2 }}>
+        <RadioGroup
+          row
+          value={strings.toString()}
+          onChange={(e) => setStrings(Number((e.target as HTMLInputElement).value))}
+        >
+          <FormControlLabel value="4" control={<Radio />} label="4 strings" />
+          <FormControlLabel value="5" control={<Radio />} label="5 strings" />
+        </RadioGroup>
+      </Stack>
     </div>
   );
 }

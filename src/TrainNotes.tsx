@@ -47,14 +47,14 @@ export function TrainNotesApp(): JSX.Element {
     };
   }, [waitSeconds]);
   return (
-    <div>
+    <Stack>
       <Typography
         align="center"
         sx={{ fontSize: 108, display: 'flex', justifyContent: 'center' }}
       >
         {altName ? notesOtherNames[note] : note}
       </Typography>
-      <Stack direction="row" alignItems="center" sx={{ p: 1 }}>
+      <Stack direction="row" alignItems="center" sx={{ p: 2 }}>
         <Typography sx={{ mr: 1 }}>Wait period (s):</Typography>
         <TextField
           type="number"
@@ -65,7 +65,7 @@ export function TrainNotesApp(): JSX.Element {
           sx={{ width: 80 }}
         />
       </Stack>
-      <div>
+      <Stack sx={{ p: 2 }}>
         { show === 'fretboard' && (
           <div>
             <div className="row">
@@ -81,8 +81,8 @@ export function TrainNotesApp(): JSX.Element {
             <StringRow note="E" scale1={ [note] } scale2={ [] }/>
           </div>
         ) }
-      </div>
-    </div>
+      </Stack>
+    </Stack>
   );
 }
 

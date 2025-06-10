@@ -1,10 +1,22 @@
 import './FindScale.css';
-import React from 'react'
-import { useState } from "react";
+import React, { useState } from 'react';
 
-export const notes = ["C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"];
+export const notes: string[] = [
+  'C',
+  'C#',
+  'D',
+  'D#',
+  'E',
+  'F',
+  'F#',
+  'G',
+  'G#',
+  'A',
+  'A#',
+  'B',
+];
 
-export const notesOtherNames = {
+export const notesOtherNames: Record<string, string> = {
   "C": "До",
   "C#": "До#",
   "D": "Ре",
@@ -16,10 +28,10 @@ export const notesOtherNames = {
   "G#": "Соль#",
   "A": "Ля",
   "A#": "Ля#",
-  "B": "Си"
-}
+  "B": "Си",
+};
 
-const scales = [
+const scales: { name: string; scale: number[] }[] = [
   {
     name: "Chord Major",
     scale: [4, 3]
@@ -50,7 +62,7 @@ const scales = [
   }
 ];
 
-export function findScale(note, scale) {
+export function findScale(note: string, scale: number[]): string[] {
   let lastIdx = notes.findIndex((n) => n === note);
   const indexes = [lastIdx];
   for (const s of scale) {
@@ -60,7 +72,12 @@ export function findScale(note, scale) {
   return indexes.map((i) => notes[i]);
 }
 
-function Square({ note, children }) {
+interface SquareProps {
+  note: string;
+  children?: React.ReactNode;
+}
+
+function Square({ note, children }: SquareProps): JSX.Element {
   return (
     <div className="square">
       <div className="note">{note}</div>
@@ -69,7 +86,13 @@ function Square({ note, children }) {
   );
 }
 
-export function StringRow({ note, scale1, scale2 }) {
+interface StringRowProps {
+  note: string;
+  scale1: string[];
+  scale2: string[];
+}
+
+export function StringRow({ note, scale1, scale2 }: StringRowProps): JSX.Element {
   const [rowNotes] = useState(() => {
     const index = notes.findIndex((n) => n === note);
     const rowNotes = [...notes.slice(index), ...notes.slice(0, index)]
@@ -91,7 +114,14 @@ export function StringRow({ note, scale1, scale2 }) {
   );
 }
 
-function SelectScale({ note, onChangeNote, scale, onChangeScale }) {
+interface SelectScaleProps {
+  note: string;
+  onChangeNote: (value: string) => void;
+  scale: number;
+  onChangeScale: (value: number) => void;
+}
+
+function SelectScale({ note, onChangeNote, scale, onChangeScale }: SelectScaleProps): JSX.Element {
   return (
     <div className="selectScale">
       <div>
@@ -127,12 +157,12 @@ function SelectScale({ note, onChangeNote, scale, onChangeScale }) {
   )
 }
 
-export function FindScaleApp() {
-  const [strings, setStrings] = useState(4);
-  const [curNote1, setCurNote1] = useState("C");
-  const [curNote2, setCurNote2] = useState("");
-  const [curScale1, setCurScale1] = useState(0);
-  const [curScale2, setCurScale2] = useState(0);
+export function FindScaleApp(): JSX.Element {
+  const [strings, setStrings] = useState<number>(4);
+  const [curNote1, setCurNote1] = useState<string>('C');
+  const [curNote2, setCurNote2] = useState<string>('');
+  const [curScale1, setCurScale1] = useState<number>(0);
+  const [curScale2, setCurScale2] = useState<number>(0);
   const scale1 = curNote1 ? findScale(curNote1, scales[curScale1].scale) : [];
   const scale2 = curNote2 ? findScale(curNote2, scales[curScale2].scale) : [];
   return (

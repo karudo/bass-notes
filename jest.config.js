@@ -1,8 +1,8 @@
 module.exports = {
   testEnvironment: 'node',
-  moduleFileExtensions: ['js', 'jsx'],
+  moduleFileExtensions: ['js', 'jsx', 'ts', 'tsx'],
   transform: {
-    '^.+\\.jsx?$': 'babel-jest'
+    '^.+\\.(t|j)sx?$': 'babel-jest'
   },
   moduleNameMapper: {
     '\\.(css|svg)$': 'identity-obj-proxy'

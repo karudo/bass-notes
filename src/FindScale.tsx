@@ -1,5 +1,6 @@
 import './FindScale.css';
 import React, { useState } from 'react';
+import type { JSX } from 'react';
 
 export const notes: string[] = [
   'C',

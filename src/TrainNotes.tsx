@@ -1,5 +1,6 @@
 import React from 'react';
-import shuffle from 'lodash/shuffle';
+import type { JSX } from 'react';
+import shuffle from 'es-toolkit/compat/shuffle';
 import { StringRow } from './FindScale';
 import './TrainNotes.css';
 

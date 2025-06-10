@@ -19,6 +19,7 @@ export function TrainNotesApp(): JSX.Element {
   const [note, setNote] = React.useState(randomNote());
   const [altName, setAltName] = React.useState(false);
   const [show, setShow] = React.useState('note');
+  const [waitSeconds, setWaitSeconds] = React.useState(5);
   React.useEffect(() => {
     let isRunning = true;
     (async () => {
@@ -31,23 +32,35 @@ export function TrainNotesApp(): JSX.Element {
           setNote(note);
           setAltName(Math.random() < 0.1);
           setShow('note');
-          await wait(5);
+          await wait(waitSeconds);
           if (!isRunning) {
             break;
           }
           setShow('fretboard');
-          await wait(5);
+          await wait(waitSeconds);
         }
       }
     })();
     return () => {
       isRunning = false;
     };
-  }, []);
+  }, [waitSeconds]);
   return (
     <div>
       <div style={{ fontSize: 108, display: 'flex', justifyContent: 'center' }}>
         { altName ? notesOtherNames[note] : note }
+      </div>
+      <div style={{ padding: '12px 0' }}>
+        <label>
+          Wait period (s):
+          <input
+            type="number"
+            min="1"
+            value={waitSeconds}
+            onChange={(e) => setWaitSeconds(Number(e.target.value))}
+            style={{ width: 60, marginLeft: 8 }}
+          />
+        </label>
       </div>
       <div>
         { show === 'fretboard' && (

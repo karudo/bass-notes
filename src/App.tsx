@@ -1,11 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 import type { JSX } from 'react';
 import { FindScaleApp } from './FindScale';
 import { TrainNotesApp } from './TrainNotes';
 import { CssBaseline, RadioGroup, FormControlLabel, Radio, Stack } from '@mui/material';
 
 export default function App(): JSX.Element {
-  const [app, setApp] = React.useState("TrainNotesApp");
+  const [app, setApp] = useState("TrainNotesApp");
   return (
     <React.Fragment>
       <CssBaseline />

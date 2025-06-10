@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import type { JSX } from 'react';
 import shuffle from 'es-toolkit/compat/shuffle';
 import { StringRow } from './Fretboard';
@@ -17,11 +17,11 @@ function wait(s: number): Promise<void> {
 }
 
 export function TrainNotesApp(): JSX.Element {
-  const [note, setNote] = React.useState(randomNote());
-  const [altName, setAltName] = React.useState(false);
-  const [show, setShow] = React.useState('note');
-  const [waitSeconds, setWaitSeconds] = React.useState(5);
-  React.useEffect(() => {
+  const [note, setNote] = useState(randomNote());
+  const [altName, setAltName] = useState(false);
+  const [show, setShow] = useState('note');
+  const [waitSeconds, setWaitSeconds] = useState(5);
+  useEffect(() => {
     let isRunning = true;
     (async () => {
       while (isRunning) {

@@ -1,19 +1,38 @@
-import React, { useState } from 'react';
+import React from 'react';
 import type { JSX } from 'react';
 import { FindScaleApp } from './FindScale';
 import { TrainNotesApp } from './TrainNotes';
-import { CssBaseline, RadioGroup, FormControlLabel, Radio, Stack } from '@mui/material';
+import {
+  CssBaseline,
+  RadioGroup,
+  FormControlLabel,
+  Radio,
+  Stack
+} from '@mui/material';
+import {
+  Routes,
+  Route,
+  Navigate,
+  useNavigate,
+  useLocation
+} from 'react-router-dom';
 
 export default function App(): JSX.Element {
-  const [app, setApp] = useState("TrainNotesApp");
+  const navigate = useNavigate();
+  const location = useLocation();
+  const current = location.pathname.includes('find-scale') ? 'FindScaleApp' : 'TrainNotesApp';
+
   return (
     <React.Fragment>
       <CssBaseline />
       <Stack sx={{ p: 2 }}>
         <RadioGroup
           row
-          value={app}
-          onChange={(e) => setApp((e.target as HTMLInputElement).value)}
+          value={current}
+          onChange={(e) => {
+            const value = (e.target as HTMLInputElement).value;
+            navigate(value === 'TrainNotesApp' ? '/train-notes' : '/find-scale');
+          }}
         >
           <FormControlLabel
             value="TrainNotesApp"
@@ -27,8 +46,11 @@ export default function App(): JSX.Element {
           />
         </RadioGroup>
       </Stack>
-      {app === 'TrainNotesApp' && <TrainNotesApp/>}
-      {app === 'FindScaleApp' && <FindScaleApp/>}
+      <Routes>
+        <Route path="/train-notes" element={<TrainNotesApp />} />
+        <Route path="/find-scale" element={<FindScaleApp />} />
+        <Route path="*" element={<Navigate to="/train-notes" replace />} />
+      </Routes>
     </React.Fragment>
   );
 }

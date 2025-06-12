@@ -1,5 +1,5 @@
 import './FindScale.css';
-import React, { useState } from 'react';
+import React from 'react';
 import type { JSX } from 'react';
 import { chromaticNotes, findScale } from './music';
 import { StringRow } from './Fretboard';
@@ -14,6 +14,7 @@ import {
   Stack,
   Typography,
 } from '@mui/material';
+import { useSearchParams } from 'react-router-dom';
 
 const scales: { name: string; scale: number[] }[] = [
   {
@@ -101,11 +102,24 @@ function SelectScale({ note, onChangeNote, scale, onChangeScale }: SelectScalePr
 }
 
 export function FindScaleApp(): JSX.Element {
-  const [strings, setStrings] = useState<number>(4);
-  const [curNote1, setCurNote1] = useState<string>('C');
-  const [curNote2, setCurNote2] = useState<string>('');
-  const [curScale1, setCurScale1] = useState<number>(0);
-  const [curScale2, setCurScale2] = useState<number>(0);
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  const strings = Number(searchParams.get('strings') || '4');
+  const curNote1 = searchParams.get('note1') ?? 'C';
+  const curNote2 = searchParams.get('note2') ?? '';
+  const curScale1 = Number(searchParams.get('scale1') || '0');
+  const curScale2 = Number(searchParams.get('scale2') || '0');
+
+  const updateParam = (key: string, value: string | number) => {
+    const params = new URLSearchParams(searchParams);
+    if (value === '') {
+      params.delete(key);
+    } else {
+      params.set(key, String(value));
+    }
+    setSearchParams(params);
+  };
+
   const scale1 = curNote1 ? findScale(curNote1, scales[curScale1].scale) : [];
   const scale2 = curNote2 ? findScale(curNote2, scales[curScale2].scale) : [];
   return (
@@ -113,15 +127,15 @@ export function FindScaleApp(): JSX.Element {
       <Stack direction="row" spacing={4} sx={{ mb: 3, p: 2 }}>
         <SelectScale
           note={curNote1}
-          onChangeNote={setCurNote1}
+          onChangeNote={(v) => updateParam('note1', v)}
           scale={curScale1}
-          onChangeScale={setCurScale1}
+          onChangeScale={(v) => updateParam('scale1', v)}
         />
         <SelectScale
           note={curNote2}
-          onChangeNote={setCurNote2}
+          onChangeNote={(v) => updateParam('note2', v)}
           scale={curScale2}
-          onChangeScale={setCurScale2}
+          onChangeScale={(v) => updateParam('scale2', v)}
         />
       </Stack>
 
@@ -136,7 +150,9 @@ export function FindScaleApp(): JSX.Element {
         <RadioGroup
           row
           value={strings.toString()}
-          onChange={(e) => setStrings(Number((e.target as HTMLInputElement).value))}
+          onChange={(e) =>
+            updateParam('strings', Number((e.target as HTMLInputElement).value))
+          }
         >
           <FormControlLabel value="4" control={<Radio />} label="4 strings" />
           <FormControlLabel value="5" control={<Radio />} label="5 strings" />

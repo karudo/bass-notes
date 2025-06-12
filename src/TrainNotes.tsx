@@ -5,6 +5,7 @@ import { StringRow } from './Fretboard';
 import { notesOtherNames } from './music';
 import './TrainNotes.css';
 import { TextField, Typography, Stack } from '@mui/material';
+import { useSearchParams } from 'react-router-dom';
 
 export const notes: string[] = ["A", "B", "C", "D", "E", "F", "G"];
 function randomNote(): string {
@@ -17,11 +18,20 @@ function wait(s: number): Promise<void> {
 }
 
 export function TrainNotesApp(): JSX.Element {
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  const altChance = Number(searchParams.get('altChance') || '10');
+  const waitSeconds = Number(searchParams.get('wait') || '5');
+
+  const updateParam = (key: string, value: number) => {
+    const params = new URLSearchParams(searchParams);
+    params.set(key, String(value));
+    setSearchParams(params);
+  };
+
   const [note, setNote] = useState(randomNote());
   const [altName, setAltName] = useState(false);
-  const [altChance, setAltChance] = useState(10);
   const [show, setShow] = useState('note');
-  const [waitSeconds, setWaitSeconds] = useState(5);
   useEffect(() => {
     let isRunning = true;
     (async () => {
@@ -63,7 +73,7 @@ export function TrainNotesApp(): JSX.Element {
             size="small"
             inputProps={{ min: 1 }}
             value={waitSeconds}
-            onChange={(e) => setWaitSeconds(Number(e.target.value))}
+            onChange={(e) => updateParam('wait', Number(e.target.value))}
             sx={{ width: 80 }}
           />
         </Stack>
@@ -75,7 +85,9 @@ export function TrainNotesApp(): JSX.Element {
             inputProps={{ min: 1, max: 100 }}
             value={altChance}
             onChange={(e) =>
-              setAltChance(Math.max(1, Math.min(100, Number(e.target.value))))
+              updateParam('altChance',
+                Math.max(1, Math.min(100, Number(e.target.value)))
+              )
             }
             sx={{ width: 80 }}
           />

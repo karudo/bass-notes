@@ -19,6 +19,7 @@ function wait(s: number): Promise<void> {
 export function TrainNotesApp(): JSX.Element {
   const [note, setNote] = useState(randomNote());
   const [altName, setAltName] = useState(false);
+  const [altChance, setAltChance] = useState(10);
   const [show, setShow] = useState('note');
   const [waitSeconds, setWaitSeconds] = useState(5);
   useEffect(() => {
@@ -31,7 +32,7 @@ export function TrainNotesApp(): JSX.Element {
             break;
           }
           setNote(note);
-          setAltName(Math.random() < 0.1);
+          setAltName(Math.random() < altChance / 100);
           setShow('note');
           await wait(waitSeconds);
           if (!isRunning) {
@@ -45,7 +46,7 @@ export function TrainNotesApp(): JSX.Element {
     return () => {
       isRunning = false;
     };
-  }, [waitSeconds]);
+  }, [waitSeconds, altChance]);
   return (
     <Stack>
       <Typography
@@ -62,6 +63,19 @@ export function TrainNotesApp(): JSX.Element {
           inputProps={{ min: 1 }}
           value={waitSeconds}
           onChange={(e) => setWaitSeconds(Number(e.target.value))}
+          sx={{ width: 80 }}
+        />
+      </Stack>
+      <Stack direction="row" alignItems="center" sx={{ p: 2 }}>
+        <Typography sx={{ mr: 1 }}>Alt name chance (%):</Typography>
+        <TextField
+          type="number"
+          size="small"
+          inputProps={{ min: 1, max: 100 }}
+          value={altChance}
+          onChange={(e) =>
+            setAltChance(Math.max(1, Math.min(100, Number(e.target.value))))
+          }
           sx={{ width: 80 }}
         />
       </Stack>

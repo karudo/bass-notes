@@ -55,29 +55,31 @@ export function TrainNotesApp(): JSX.Element {
       >
         {altName ? notesOtherNames[note] : note}
       </Typography>
-      <Stack direction="row" alignItems="center" sx={{ p: 2 }}>
-        <Typography sx={{ mr: 1 }}>Wait period (s):</Typography>
-        <TextField
-          type="number"
-          size="small"
-          inputProps={{ min: 1 }}
-          value={waitSeconds}
-          onChange={(e) => setWaitSeconds(Number(e.target.value))}
-          sx={{ width: 80 }}
-        />
-      </Stack>
-      <Stack direction="row" alignItems="center" sx={{ p: 2 }}>
-        <Typography sx={{ mr: 1 }}>Alt name chance (%):</Typography>
-        <TextField
-          type="number"
-          size="small"
-          inputProps={{ min: 1, max: 100 }}
-          value={altChance}
-          onChange={(e) =>
-            setAltChance(Math.max(1, Math.min(100, Number(e.target.value))))
-          }
-          sx={{ width: 80 }}
-        />
+      <Stack direction="row">
+        <Stack direction="row" alignItems="center" sx={{ p: 2 }}>
+          <Typography sx={{ mr: 1 }}>Wait period (s):</Typography>
+          <TextField
+            type="number"
+            size="small"
+            inputProps={{ min: 1 }}
+            value={waitSeconds}
+            onChange={(e) => setWaitSeconds(Number(e.target.value))}
+            sx={{ width: 80 }}
+          />
+        </Stack>
+        <Stack direction="row" alignItems="center" sx={{ p: 2 }}>
+          <Typography sx={{ mr: 1 }}>Alt name chance (%):</Typography>
+          <TextField
+            type="number"
+            size="small"
+            inputProps={{ min: 1, max: 100 }}
+            value={altChance}
+            onChange={(e) =>
+              setAltChance(Math.max(1, Math.min(100, Number(e.target.value))))
+            }
+            sx={{ width: 80 }}
+          />
+        </Stack>
       </Stack>
       <Stack sx={{ p: 2 }}>
         { show === 'fretboard' && (
